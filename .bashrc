@@ -1,9 +1,13 @@
-# Prompt related
+FREQUENCY=0.5
+NF_INSTALLED=true
 
-FREQUENCY=0.4
 TTY=$(tty | tr -d /dev/pts/)
-PS1="[\u \s/${TTY}]"
 JOBS='$([ \j -gt 0 ] && echo "[\j] ")';
+if [ "$NF_INSTALLED" = true ]; then
+    PS1=$'[\xee\xae\x99 \u \xee\x98\xa1 \xef\x84\x89 \h \xee\x98\xa1 \xee\xaf\x8a ${TTY}]'
+else
+    PS1=$'[\u | \h | \s/${TTY}]'
+fi
 
 if [ "$TERM" = "xterm-256color" ] || [ "$TERM" = "alacritty" ]; then
     PS1=$(echo ${PS1@P} | lolcat -f -t -F ${FREQUENCY} | sed -r 's/[\x1b]\[[0-9]+;[0-9]+;[0-9]+;[0-9]+;[0-9]+[a-z]|\x1b\[[0-9]+[a-z]/\\\[&\\\]/g')
